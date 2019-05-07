@@ -16,13 +16,6 @@ print(r)
 print(r.content)
 identifier = json.loads(r.content)['identifier']
 print('identifier:', identifier)
-result = {
-    "identifier":1,
-    "result":[
-        {"home":11,"out":0},
-        {"home":11,"out":1}
-    ]
-}
 
 def set_result():
     if randint(0,1) == 1:

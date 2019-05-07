@@ -15,6 +15,7 @@ class Game:
     def set_result(self , result):
         if self.is_played == True:
             return 'Result is already set.'
+        # todo: add check that result is a valid result for a ping-pong game
         self.result = result
         self.is_played = True
         winner, loser = self.get_winner()

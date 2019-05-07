@@ -7,6 +7,8 @@ import logging
 # Import the framework
 from flask import Flask, g
 from flask_restful import Resource, Api, reqparse
+from flask_sqlalchemy import SQLAlchemy 
+from flask_marshmallow import Marshmallow
 
 from ping_pong.game import Players, Games, GameSet
 
@@ -18,12 +20,14 @@ players = Players()
 
 # Create an instance of Flask
 app = Flask(__name__)
-
-# from werkzeug.debug import DebuggedApplication
-# app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
-
-# app.debug = True
-
+basedir = os.path.abspath(os.path.dirname(__file__))
+# Database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Init db
+db = SQLAlchemy(app)
+# Init ma
+ma = Marshmallow(app)
 # Create the API
 api = Api(app)
 
