@@ -3,31 +3,28 @@ import os
 import shelve
 import json
 import logging
+import pickle
 
 # Import the framework
 from flask import Flask, g
 from flask_restful import Resource, Api, reqparse
-from flask_sqlalchemy import SQLAlchemy 
-from flask_marshmallow import Marshmallow
-
 from ping_pong.game import Players, Games, GameSet
 
 # Create a Games instance
-games = Games()
+persistent_file = 'persistency.pickle'
+exists = os.path.isfile(persistent_file)
+if exists:
+    pickle_in = open(persistent_file,'rb')
+    games = pickle.load(pickle_in)
+    pickle_in.close()
+else:
+    games = Games()
 
 # Create a Players instance
 players = Players()
 
 # Create an instance of Flask
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
-# Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# Init db
-db = SQLAlchemy(app)
-# Init ma
-ma = Marshmallow(app)
 # Create the API
 api = Api(app)
 
@@ -80,21 +77,14 @@ class GamesList(Resource):
         home_player = players.get_by_name(args.home_player)
         out_player = players.get_by_name(args.out_player)
         game = games.add_game(home_player,out_player)
-
+        pickle_out = open(persistent_file,'wb')
+        pickle.dump(games,pickle_out)
+        pickle_out.close()
         return {'message': 'Device registered', 'data': args, 'identifier': game.identifier}, 201
 
     def put(self):
         parser = reqparse.RequestParser()
 
-        # propsal = []
-        # propsal.append({
-        #     "home":0,
-        #     "out":0,
-        #     })
-        # propsal.append({
-        #     "home":0,
-        #     "out":0,
-        #     })
         parser.add_argument('result', action = 'append')
         parser.add_argument('identifier', type=int)
         
@@ -111,6 +101,9 @@ class GamesList(Resource):
                 result.append(set3)
         game = games.get_by_id(args.identifier)
         game.set_result(result)
+        pickle_out = open(persistent_file,'wb')
+        pickle.dump(games,pickle_out)
+        pickle_out.close()
 
         return {'message': 'Device registered', 'data': args}, 201
 

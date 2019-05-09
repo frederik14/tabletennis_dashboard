@@ -1,9 +1,12 @@
+import pickle
+import os
+
 class GameSet:
     def __init__(self, home_score = 0, out_score = 0):
         self.home = home_score
         self.out = out_score
 
-class Game:
+class Game():
     total_games = 0
     def __init__(self, home_player, out_player):
         self.home_player = home_player
@@ -12,6 +15,8 @@ class Game:
         self.is_played = False
         Game.total_games += 1
         self.identifier = Game.total_games
+        self.home = 0
+        self.out = 0
     def set_result(self , result):
         if self.is_played == True:
             return 'Result is already set.'
@@ -24,14 +29,14 @@ class Game:
         if winner.rank < loser.rank:
             loser.rank, winner.rank = winner.rank, loser.rank
     def get_sets(self):
-        home = 0
-        out = 0
+        self.home = 0
+        self.out = 0
         for game_set in self.result:
             if game_set.home > game_set.out:
-                home += 1
+                self.home += 1
             elif game_set.home < game_set.out:
-                out += 1
-        return home , out
+                self.out += 1
+        return self.home , self.out
     def get_winner(self):
         home, out = self.get_sets()
         if home > out:
@@ -40,11 +45,21 @@ class Game:
             return self.out_player, self.home_player
 
 class Games:
+    f = 'games.pickle'
     def __init__(self):
-        self.list = []
+        # exists = os.path.isfile(Games.f)
+        # if exists:
+        #     pickle_in = open(Games.f,'rb')
+        #     self.list = pickle.load(pickle_in)
+        #     pickle_in.close()
+        # else:
+            self.list = []
     def add_game(self, home_player, out_player):
         game = Game(home_player,out_player)
         self.list.append(game)
+        # pickle_out = open('games.pickle','wb')
+        # pickle.dump(self.list,pickle_out)
+        # pickle_out.close()
         return game
     def get_by_id(self,identifier):
         for game in self.list:
