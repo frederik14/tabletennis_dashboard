@@ -8,7 +8,7 @@ import pickle
 # Import the framework
 from flask import Flask, g
 from flask_restful import Resource, Api, reqparse
-from ping_pong.game import Players, Games, GameSet
+from src.entities import Players, Games, GameSet
 
 # Create a Games instance
 persistent_file = 'persistency.pickle'

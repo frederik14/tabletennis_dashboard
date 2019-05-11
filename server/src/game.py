@@ -1,7 +1,8 @@
 from sqlalchemy import Column, String, Integer, Date, Table, ForeignKey
 from sqlalchemy.orm import relationship
-from datetime import date
-from base import Base
+from datetime import datetime
+from marshmallow import Schema, fields
+from src.base import Base
 
 # movies_actors_association = Table(
 #     'games_players', Base.metadata,
@@ -10,12 +11,12 @@ from base import Base
 # )
 
 class Game(Base):
-    __tablename__ = 'games'
+    __tablename__ = 'game'
     id = Column(Integer, primary_key=True)
-    home_player_id = Column(String, ForeignKey('players.id'))
-    home_player = relationship("Player", backref = "games")
-    out_player_id = Column(String, ForeignKey('players.id'))
-    out_player_id = relationship('Player', backref = "games")
+    home_player_id = Column(String, ForeignKey('player.id'))
+    home_player = relationship('Player', foreign_keys = [home_player_id] ) #backref = "games")
+    out_player_id = Column(String, ForeignKey('player.id'))
+    out_player = relationship('Player', foreign_keys = [out_player_id] )# backref = "games")
     home_sets = Column(Integer)
     out_sets = Column(Integer)
     date = Column(Date)
@@ -24,4 +25,12 @@ class Game(Base):
         self.out_player = out_player
         self.home_sets = home_sets
         self.out_sets = out_sets
-        self.date = date()
+        self.date = datetime.now()
+
+class GameSchema(Schema):
+    id = fields.Int()
+    home_player = fields.Str()
+    out_player = fields.Str()
+    home_sets = fields.Int()
+    out_sets = fields.Int()
+    date = fields.DateTime()
