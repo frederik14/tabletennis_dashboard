@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from marshmallow import Schema, fields
 from src.base import Base
+from src.player import PlayerSchema
 
 # movies_actors_association = Table(
 #     'games_players', Base.metadata,
@@ -29,8 +30,8 @@ class Game(Base):
 
 class GameSchema(Schema):
     id = fields.Int()
-    home_player = fields.Str()
-    out_player = fields.Str()
+    home_player = fields.Nested(PlayerSchema)
+    out_player= fields.Nested(PlayerSchema)
     home_sets = fields.Int()
     out_sets = fields.Int()
     date = fields.DateTime()
