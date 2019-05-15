@@ -5,19 +5,13 @@ from marshmallow import Schema, fields
 from src.base import Base
 from src.player import PlayerSchema
 
-# movies_actors_association = Table(
-#     'games_players', Base.metadata,
-#     Column('player_name', String, ForeignKey('players.name')),
-#     Column('game_id', Integer, ForeignKey('games.id'))
-# )
-
 class Game(Base):
     __tablename__ = 'game'
     id = Column(Integer, primary_key=True)
-    home_player_id = Column(String, ForeignKey('player.id'))
-    home_player = relationship('Player', foreign_keys = [home_player_id] ) #backref = "games")
-    out_player_id = Column(String, ForeignKey('player.id'))
-    out_player = relationship('Player', foreign_keys = [out_player_id] )# backref = "games")
+    home_player_id = Column(Integer, ForeignKey('player.id'))
+    home_player = relationship('Player', foreign_keys = [home_player_id], uselist=False ) #backref = "games")
+    out_player_id = Column(Integer, ForeignKey('player.id'))
+    out_player = relationship('Player', foreign_keys = [out_player_id], uselist=False )# backref = "games")
     home_sets = Column(Integer)
     out_sets = Column(Integer)
     date = Column(Date)

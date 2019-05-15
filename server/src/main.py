@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 from .base import Session, engine, Base
 from .game import Game, GameSchema
 from .player import Player, PlayerSchema
+from marshmallow import ValidationError
+from sqlalchemy.sql.expression import func
 
 # creating the Flask application
 app = Flask(__name__)
@@ -26,20 +28,46 @@ def get_players():
 
 
 @app.route('/players', methods=['POST'])
-def add_player():
-    # mount exam object
-    player_schema = PlayerSchema().load(request.get_json())
-    player = Player(player_schema.data['name'],player_schema.data['rank'])
+# def add_player():
+#     # mount exam object
+#     player_schema = PlayerSchema().load(request.get_json())
+#     player = Player(player_schema.data['name'],player_schema.data['rank'])
 
-    # persist exam
+#     # persist exam
+#     session = Session()
+#     session.add(player)
+#     session.commit()
+
+#     # return created exam
+#     new_player = PlayerSchema().dump(player).data
+#     session.close()
+#     return jsonify(new_player), 201
+
+@app.route('/players', methods=['POST'])
+def new_player():
     session = Session()
+    json_data = request.get_json()
+    if not json_data:
+        return jsonify({'message': 'No input data provided'}), 400
+    # Validate and deserialize input
+    try:
+        data = PlayerSchema().load(json_data)[0]
+    except ValidationError as err:
+        return jsonify(err.messages), 422
+    name = data['name']
+    player = session.query(Player).filter_by(name=name).first()
+    rank = session.query(func.max(Player.rank)).scalar() + 1
+    if player is None:
+        # Create a new player
+        player = Player(name,rank)
+        session.add(player)
     session.add(player)
     session.commit()
-
-    # return created exam
-    new_player = PlayerSchema().dump(player).data
-    session.close()
-    return jsonify(new_player), 201
+    result = PlayerSchema().dump(session.query(Player).get(player.id))
+    return jsonify({
+        'message': 'Created new player.',
+        'player': result,
+    })
 
 @app.route('/games')
 def get_games():
