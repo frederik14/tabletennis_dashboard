@@ -127,7 +127,7 @@ If a player didn't exist it will give error 400.
             "out_player": "Flore",
             "out_sets": 0
         },
-        "message": "Created new player."
+        "message": "Created new game."
     }
 ```
 
@@ -169,11 +169,11 @@ If the game is a draw it is set to 0-0. (draws are not excepted)
     }
 ```
 
-## Delete a device
+## Delete TODO
 
 **Definition**
 
-`DELETE /devices/<identifier>`
+`DELETE /`
 
 **Response**
 

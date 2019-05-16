@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
-from .base import Session, engine, Base
-from .game import Game, GameSchema
-from .player import Player, PlayerSchema
+from src.base import Session, engine, Base
+from src.game import Game, GameSchema
+from src.player import Player, PlayerSchema
 from marshmallow import ValidationError
 from sqlalchemy.sql.expression import func
 
