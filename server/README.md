@@ -1,4 +1,4 @@
-# Device Registry Service
+# Player
 
 ## Usage
 
@@ -13,11 +13,11 @@ All responses will have the form
 
 Subsequent response definitions will only detail the expected value of the `data field`
 
-### List all devices
+### List all players
 
 **Definition**
 
-`GET /devices`
+`GET /players`
 
 **Response**
 
@@ -26,34 +26,33 @@ Subsequent response definitions will only detail the expected value of the `data
 ```json
 [
     {
-        "identifier": "floor-lamp",
-        "name": "Floor Lamp",
-        "device_type": "switch",
-        "controller_gateway": "192.1.68.0.2"
+        "id": 2,
+        "name": "Flore",
+        "rank": 1
     },
     {
-        "identifier": "samsung-tv",
-        "name": "Living Room TV",
-        "device_type": "tv",
-        "controller_gateway": "192.168.0.9"
+        "id": 1,
+        "name": "Frederik",
+        "rank": 2
     }
 ]
 ```
 
-### Registering a new device
+### Registering a new player
 
 **Definition**
 
-`POST /devices`
+`POST /players`
 
 **Arguments**
 
-- `"identifier":string` a globally unique identifier for this device
-- `"name":string` a friendly name for this device
-- `"device_type":string` the type of the device as understood by the client
-- `"controller_gateway":string` the IP address of the device's controller
+```json
+    {
+        "name": "Flore",
+    }
+```
 
-If a device with the given identifier already exists, the existing device will be overwritten.
+If a device with the given name already exists error 400 will be given.
 
 **Response**
 
@@ -61,29 +60,113 @@ If a device with the given identifier already exists, the existing device will b
 
 ```json
 {
-    "identifier": "floor-lamp",
-    "name": "Floor Lamp",
-    "device_type": "switch",
-    "controller_gateway": "192.1.68.0.2"
+    "message": "Created new player.",
+    "player": {
+        "id": 4,
+        "name": "test2",    
+        "rank": 4
+    }
 }
 ```
+### List all games
 
-## Lookup device details
+**Definition**
 
-`GET /device/<identifier>`
+`GET /games`
 
 **Response**
 
-- `404 Not Found` if the device does not exist
 - `200 OK` on success
 
 ```json
-{
-    "identifier": "floor-lamp",
-    "name": "Floor Lamp",
-    "device_type": "switch",
-    "controller_gateway": "192.1.68.0.2"
-}
+[
+    {
+        "home_player": "Frederik",
+        "home_sets": 0,
+        "id": 3,
+        "out_player": "Flore",
+        "out_sets": 0
+    },
+    {
+        "home_player": "Frederik",
+        "home_sets": 0,
+        "id": 4,
+        "out_player": "Flore",
+        "out_sets": 2
+    }
+]
+```
+
+### Registering a new game
+
+**Definition**
+
+`POST /games`
+
+**Arguments**
+
+```json
+    {
+        "home_player": "Frederik",
+        "out_player": "Flore"
+    }
+```
+
+If a player didn't exist it will give error 400.
+
+**Response**
+
+- `201 Created` on success
+
+```json
+    {
+        "game": {
+            "home_player": "Frederik",
+            "home_sets": 0,
+            "id": 5,
+            "out_player": "Flore",
+            "out_sets": 0
+        },
+        "message": "Created new player."
+    }
+```
+
+### Set result for an existing game
+
+**Definition**
+
+`PUT /games`
+
+**Arguments**
+
+The id is received when creating a game of by getting all games.
+
+```json
+    {
+        "id" : 4,
+        "home_sets" : 1,
+        "out_sets" : 2
+    }
+```
+
+If the game doesn't exist you will get error 400.
+If the game is a draw it is set to 0-0. (draws are not excepted)
+
+**Response**
+
+- `201 Created` on success
+
+```json
+    {
+    "message": "Game result is set.",
+    "player": {
+        "home_player": "Frederik",
+        "home_sets": 1,
+        "id": 6,
+        "out_player": "Flore",
+        "out_sets": 2
+        }
+    }
 ```
 
 ## Delete a device
