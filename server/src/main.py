@@ -114,7 +114,7 @@ def add_game():
     result = GameSchema().dump(session.query(Game).get(game.id))
     return jsonify({
         'message': 'Created new player.',
-        'player': result,
+        'game': result.data,
     })
 
 @app.route('/games', methods=['PUT'])

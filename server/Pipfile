@@ -8,6 +8,10 @@ verify_ssl = true
 [packages]
 sqlalchemy = "*"
 psycopg2 = "*"
+marshmallow = "*"
+markdown = "*"
+flask = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
