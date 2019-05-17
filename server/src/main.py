@@ -4,9 +4,12 @@ from src.game import Game, GameSchema
 from src.player import Player, PlayerSchema
 from marshmallow import ValidationError
 from sqlalchemy.sql.expression import func
+from flask_cors import CORS
 
 # creating the Flask application
 app = Flask(__name__)
+CORS(app)
+
 
 # if needed, generate database schema
 Base.metadata.create_all(engine)

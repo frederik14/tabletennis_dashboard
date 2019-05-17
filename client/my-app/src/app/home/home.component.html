@@ -1,3 +1,2 @@
-<p>
-  home works!
-</p>
+<app-player-item *ngFor = "let player of players" [player] = "player"></app-player-item>
+<app-add-player (addPlayer) = "addPlayer($event)"></app-add-player>
