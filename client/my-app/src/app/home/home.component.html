@@ -1,2 +1,4 @@
 <app-player-item *ngFor = "let player of players" [player] = "player"></app-player-item>
 <app-add-player (addPlayer) = "addPlayer($event)"></app-add-player>
+<app-game-item *ngFor = "let game of games" [game] = "game" (setGameResult) = "setGameResult($event)"></app-game-item>
+<app-add-game (addGame) = "addGame($event)"></app-add-game>

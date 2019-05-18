@@ -1,0 +1,8 @@
+<div>
+  {{ game.id }}. {{ game.home_player }} - {{ game.out_player }} ({{ game.home_sets }} - {{ game.out_sets }})
+  <form class="form" (ngSubmit)="onSubmit()" >
+    <input type="number" name = "home_sets" [(ngModel)]="home_sets" placeholder="0">
+    <input type="number" name = "out_sets" [(ngModel)]="out_sets" placeholder="0">
+    <input type="submit" class="btn">
+  </form>
+</div>

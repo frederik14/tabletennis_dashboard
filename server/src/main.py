@@ -71,7 +71,7 @@ def new_player():
     result = PlayerSchema().dump(session.query(Player).get(player.id))
     return jsonify({
         'message': 'Created new player.',
-        'player': result.data,
+        'data': result.data,
     })
 
 @app.route('/games')
@@ -117,7 +117,7 @@ def add_game():
     result = GameSchema().dump(session.query(Game).get(game.id))
     return jsonify({
         'message': 'Created new game.',
-        'game': result.data,
+        'data': result.data,
     })
 
 @app.route('/games', methods=['PUT'])
@@ -141,5 +141,5 @@ def change_game():
     result = GameSchema().dump(session.query(Game).get(game.id))
     return jsonify({
         'message': 'Game result is set.',
-        'player': result.data,
+        'data': result.data,
     })

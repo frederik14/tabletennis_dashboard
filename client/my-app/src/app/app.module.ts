@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { AddComponent } from './add/add.component';
 import { PlayerItemComponent } from './player-item/player-item.component';
 import { AddPlayerComponent } from './add-player/add-player.component';
+import { GameItemComponent } from './game-item/game-item.component';
+import { AddGameComponent } from './add-game/add-game.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { AddPlayerComponent } from './add-player/add-player.component';
     HomeComponent,
     AddComponent,
     PlayerItemComponent,
-    AddPlayerComponent
+    AddPlayerComponent,
+    GameItemComponent,
+    AddGameComponent,
   ],
   imports: [
     BrowserModule,

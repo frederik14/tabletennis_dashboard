@@ -18,7 +18,7 @@ export class PlayerService {
   constructor(private http:HttpClient) { }
 
   //Get Players
-  GetPlayers():Observable<Player[]> {
+  getPlayers():Observable<Player[]> {
     return this.http.get<Player[]>(this.players_url);
   }
 
