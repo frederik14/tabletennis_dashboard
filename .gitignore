@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# db extensions
+*.db
+
 # Distribution / packaging
 .Python
 env/
@@ -103,3 +106,5 @@ ENV/
 .idea/
 *.iml
 .DS_Store
+
+server/src/ping_pong.db
