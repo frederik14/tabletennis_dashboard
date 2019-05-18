@@ -10,8 +10,9 @@ export class GameItemComponent implements OnInit {
   @Input() game: Game;
   @Output() setGameResult: EventEmitter<any> = new EventEmitter();
 
-  home_sets:Number;
-  out_sets:Number;
+  home_sets:Number = 0;
+  out_sets:Number = 0;
+  is_shown:Boolean = false;
 
   constructor() { }
 
@@ -25,5 +26,9 @@ export class GameItemComponent implements OnInit {
       out_sets: this.out_sets,
     }
     this.setGameResult.emit(game_result)
+  }
+
+  onGameClick() {
+    this.is_shown = !this.is_shown
   }
 }

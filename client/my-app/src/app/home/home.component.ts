@@ -12,6 +12,8 @@ import { GameService } from '../game.service'
 export class HomeComponent implements OnInit {
   players:Player[]
   games:Game[]
+  is_game_add_shown:Boolean = false;
+  is_player_add_shown:Boolean = false;
   constructor(private player_service:PlayerService, private game_service:GameService) { }
 
   ngOnInit() {
@@ -50,5 +52,14 @@ export class HomeComponent implements OnInit {
       //Add to UI
       this.games[this.games.findIndex(game => game.id === response.data.id)] = response.data
     });
+  }
+
+  gameAddClick() {
+    console.log('add click')
+    this.is_game_add_shown = !this.is_game_add_shown
+  }
+
+  playerAddClick() {
+    this.is_player_add_shown = !this.is_player_add_shown
   }
 }
