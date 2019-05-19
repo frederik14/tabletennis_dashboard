@@ -5,7 +5,8 @@ import { Game } from '../models/game';
 
 const http_options = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
   })
 }
 
@@ -26,6 +27,12 @@ export class GameService {
   addGame(game:Game):Observable<any> {
     return this.http.post<any>(this.url, game, http_options) 
   }
+
+  //Delete Game
+  deleteGame(game:Game):Observable<any> {
+    return this.http.delete<any>(this.url+'/'+game.id, http_options) 
+  }
+  
 
   //Set game result
   setGameResult(game:Game):Observable<any> {

@@ -5,7 +5,9 @@ import { Player } from '../models/player';
 
 const http_options = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS"
   })
 }
 
@@ -13,17 +15,22 @@ const http_options = {
   providedIn: 'root'
 })
 export class PlayerService {
-  players_url:string = 'http://localhost:5000/players'
+  player_url:string = 'http://localhost:5000/players'
 
   constructor(private http:HttpClient) { }
 
   //Get Players
   getPlayers():Observable<Player[]> {
-    return this.http.get<Player[]>(this.players_url);
+    return this.http.get<Player[]>(this.player_url);
   }
 
   //Add new Player
   addPlayer(player:Player):Observable<any> {
-    return this.http.post<any>(this.players_url, player, http_options) 
+    return this.http.post<any>(this.player_url, player, http_options) 
+  }
+
+  //Delete Game
+  deletePlayer(player:Player):Observable<any> {
+    return this.http.delete<any>(this.player_url+'/'+player.id, http_options) 
   }
 }

@@ -51,6 +51,30 @@ export class HomeComponent implements OnInit {
       console.log(response)
       //Add to UI
       this.games[this.games.findIndex(game => game.id === response.data.id)] = response.data
+      this.player_service.getPlayers().subscribe(players => {
+        console.log(players)
+        this.players = players
+      });
+    });
+  }
+
+  deleteGame(game:Game) {
+    //Add to server
+    this.game_service.deleteGame(game).subscribe(response => {
+      //Add to UI
+      this.game_service.getGames().subscribe(games => {
+        this.games = games
+      });
+    });
+  }
+
+  deletePlayer(player:Player) {
+    //Add to server
+    this.player_service.deletePlayer(player).subscribe(response => {
+      //Add to UI
+      this.player_service.getPlayers().subscribe(players => {
+        this.players = players
+      });
     });
   }
 

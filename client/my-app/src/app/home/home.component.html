@@ -4,11 +4,11 @@
     </button>
 </h1>
 <app-add-player *ngIf="is_player_add_shown" (addPlayer) = "addPlayer($event)"></app-add-player>
-<app-player-item *ngFor = "let player of players" [player] = "player"></app-player-item>
+<app-player-item *ngFor = "let player of players" [player] = "player" (deletePlayer) = "deletePlayer($event)"></app-player-item>
 <h1>Games 
   <button (click)="gameAddClick()">
     Add
   </button>
 </h1>
 <app-add-game *ngIf="is_game_add_shown" (addGame) = "addGame($event)"></app-add-game>
-<app-game-item *ngFor = "let game of games" [game] = "game" (setGameResult) = "setGameResult($event)"></app-game-item>
+<app-game-item *ngFor = "let game of games" [game] = "game" (setGameResult) = "setGameResult($event)" (deleteGame) = "deleteGame($event)"></app-game-item>

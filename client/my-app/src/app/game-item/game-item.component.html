@@ -1,8 +1,9 @@
 <p (click)="onGameClick()">
-  {{ game.id }}. {{ game.home_player }} - {{ game.out_player }} ({{ game.home_sets }} - {{ game.out_sets }})
+  {{ game.home_player }} - {{ game.out_player }} ({{ game.home_sets }} - {{ game.out_sets }})
 </p>
 <form *ngIf="is_shown"> 
   <input type="number" name = "home_sets" [(ngModel)]="home_sets" value="0">
   <input type="number" name = "out_sets" [(ngModel)]="out_sets" value="0">
   <input type="submit" (click) = "onSubmit()" class="btn">
+  <button (click) = 'onDelete()'>Delete</button>
 </form>

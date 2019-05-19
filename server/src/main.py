@@ -30,21 +30,17 @@ def get_players():
     return jsonify(players.data)
 
 
-@app.route('/players', methods=['POST'])
-# def add_player():
-#     # mount exam object
-#     player_schema = PlayerSchema().load(request.get_json())
-#     player = Player(player_schema.data['name'],player_schema.data['rank'])
-
-#     # persist exam
-#     session = Session()
-#     session.add(player)
-#     session.commit()
-
-#     # return created exam
-#     new_player = PlayerSchema().dump(player).data
-#     session.close()
-#     return jsonify(new_player), 201
+@app.route('/players/<int:id>', methods=['DELETE'])
+def delete_player(id):
+    session = Session()
+    if not id:
+        return jsonify({'message': 'Missing input data'}), 400
+    player = session.query(Player).get(id)
+    session.delete(player)
+    session.commit()
+    return jsonify({
+        'message': 'Player is deleted.',
+    })
 
 @app.route('/players', methods=['POST'])
 def new_player():
@@ -119,6 +115,19 @@ def add_game():
         'message': 'Created new game.',
         'data': result.data,
     })
+
+@app.route('/games/<int:id>', methods=['DELETE'])
+def delete_game(id):
+    session = Session()
+    if not id:
+        return jsonify({'message': 'Missing input data'}), 400
+    game = session.query(Game).get(id)
+    session.delete(game)
+    session.commit()
+    return jsonify({
+        'message': 'Game is deleted.',
+    })
+
 
 @app.route('/games', methods=['PUT'])
 def change_game():

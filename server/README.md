@@ -61,7 +61,7 @@ If a device with the given name already exists error 400 will be given.
 ```json
 {
     "message": "Created new player.",
-    "player": {
+    "data": {
         "id": 4,
         "name": "test2",    
         "rank": 4
@@ -127,7 +127,7 @@ If a player didn't exist it will give error 400.
             "out_player": "Flore",
             "out_sets": 0
         },
-        "message": "Created new game."
+        "data": "Created new game."
     }
 ```
 
@@ -159,7 +159,7 @@ If the game is a draw it is set to 0-0. (draws are not excepted)
 ```json
     {
     "message": "Game result is set.",
-    "player": {
+    "data": {
         "home_player": "Frederik",
         "home_sets": 1,
         "id": 6,
@@ -169,11 +169,22 @@ If the game is a draw it is set to 0-0. (draws are not excepted)
     }
 ```
 
-## Delete TODO
+## Delete Player
 
 **Definition**
 
-`DELETE /`
+`DELETE players/<id>`
+
+**Response**
+
+- `404 Not Found` if the device does not exist
+- `204 No Content` on success
+
+## Delete game
+
+**Definition**
+
+`DELETE games/<id>`
 
 **Response**
 
