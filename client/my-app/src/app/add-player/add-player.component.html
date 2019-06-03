@@ -1,4 +1,8 @@
 <form class="form" (ngSubmit)="onSubmit()" >
-  <input type="text" name = "name" [(ngModel)]="name" placeholder="Add Player...">
-  <input type="submit" class="btn">
+  <mat-form-field>
+    <input mat-input type="text" name = "name" [(ngModel)]="name" placeholder="Add Player...">
+  </mat-form-field>
+  <mat-form-field>
+    <input type="submit" class="btn">
+  </mat-form-field>
 </form>

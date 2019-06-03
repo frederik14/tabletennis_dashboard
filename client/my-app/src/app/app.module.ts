@@ -12,6 +12,8 @@ import { PlayerItemComponent } from './player-item/player-item.component';
 import { AddPlayerComponent } from './add-player/add-player.component';
 import { GameItemComponent } from './game-item/game-item.component';
 import { AddGameComponent } from './add-game/add-game.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from "./material.module";
 
 @NgModule({
   declarations: [
@@ -23,12 +25,14 @@ import { AddGameComponent } from './add-game/add-game.component';
     AddPlayerComponent,
     GameItemComponent,
     AddGameComponent,
+    MaterialModule
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule, 
-    FormsModule
+    FormsModule, BrowserAnimationsModule, 
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
