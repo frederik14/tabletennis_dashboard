@@ -24,15 +24,13 @@ import { MaterialModule } from "./material.module";
     PlayerItemComponent,
     AddPlayerComponent,
     GameItemComponent,
-    AddGameComponent,
-    MaterialModule
+    AddGameComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule, 
     FormsModule, BrowserAnimationsModule, 
-    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
